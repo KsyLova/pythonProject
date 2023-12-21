@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Начисление зарплаты</title>
+
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous">
+</script>
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+{{ form.media }}
+<form method="post" class="mx-auto" style="width: 800px">
+    <h1 class="display-4 text-dark text-content "align="center">Начисление зарплаты</h1>
+{% csrf_token %}
+    <div class="row g-3">
+        <div  class="col">
+           {{ form.number|as_crispy_field }}
+        </div>
+         <div class="col">
+           {{ form.payout|as_crispy_field }}
+        </div>
+    </div>
+     {{ form.date_salary|as_crispy_field }}
+    <button type="submit" id="salary_button" class="btn btn-primary"> Добавить </button>
+</form>
+{% block javascript %}
+		<script src=" https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js">
+		</script>
+		<script>
+			$(document).ready(function(){
+				$('#id_number').keyup(function(){
+					$.ajax(
+						{
+							data:$(this).serialize(),
+							url: "{% url 'check_numberPay' %}",
+							success:
+								function (response){
+								if ($('#numberError').length==0)
+									$('#id_number').after('<div class="invalid-feedback d-block" id="numberError"></div>');
+								if(response.taken == true){
+									$('#id_number').removeClass('is-valid').addClass('is-invalid');
+									$('#numberError').removeClass('valid-feedback').addClass('invalid-feedback').text("Номер существует");
+									$('#salary_button').prop('disabled', true);
+								} else{
+									$('#id_number').removeClass('is-invalid').addClass('is-valid');
+									$('#numberError').removeClass('invalid-feedback').addClass('valid-feedback').text("Номер свободен");
+									$('#salary_button').prop('disabled',false);
+								}
+								},
+							error: function(response){
+								console.log(response.responseJSON.errors);
+							}
+					});
+				return false;
+				});
+			});
+		</script>
+{% endblock javascript %}
+{% endblock %}
+</body>
+</html>

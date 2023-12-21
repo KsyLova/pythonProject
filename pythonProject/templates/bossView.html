@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% extends "base.html" %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'show_info.css' %}">
+</head>
+<body>
+{% block content %}
+    <div class="container" >
+        <h1 class="display-4 text-dark text-content "align="center">Выберите отдел</h1>
+        <div class="mx-auto d-grid gap-2" style="margin-top:20vh; width:300px">
+            {% for department in departments %}
+                <a href="{% url 'show_department' department.id %}" type="button" class="btn btn btn-outline-primary">{{department.name}}</a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% extends "base.html" %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'show_info.css' %}">
+</head>
+<body>
+{% block content %}
+    <div class="container" >
+        <h1 class="display-4 text-dark text-content "align="center">Список сотрудников отдела </h1>
+        <div class="mx-auto d-grid gap-2" style="margin-top:15vh; width:900px">
+             <table class="table">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col">Пользователь</th>
+                  <th scope="col">Сотрудник</th>
+                  <th scope="col">Контракт</th>
+                  <th scope="col">Профиль</th>
+                </tr>
+              </thead>
+            {% for worker in workers %}
+                  <tr class="table">
+                      <td>{{worker.id_user}}</td>
+                      <td>{{worker.first_name}} {{worker.last_name}}</td>
+                      <td >{{worker.contract}}</td>
+                      <td><a href="{% url 'show_worker' worker.id %}" class="btn btn-outline-success"> Посмотреть</a></td>
+                    </tr>
+            {% endfor %}
+
+                       </tbody>
+    </table>
+        </div>
+    </div>
+{% endblock %}
+</body>
+</html>

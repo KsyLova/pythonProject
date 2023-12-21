@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% load static %}
+    {% load django_bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link rel="stylesheet" type="text/css" href="{% static 'show_info.css' %}">
+</head>
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand">THEBESTCOMPANY</a>
+
+       <form class="d-flex">
+        <a href= "{% url 'logout' %}" class="btn btn-danger" type="submit">Выход</a>
+      </form>
+    </div>
+  </div>
+</nav>
+</header>
+<body>
+{% block content %}
+{% endblock %}
+</body>
+</html>
